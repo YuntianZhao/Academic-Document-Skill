@@ -9,3 +9,5 @@
 - Add a non-overwriting project-creation helper and safety checks for existing
   files and dangling symlinks.
 - Document installation, authoring, compilation, and rendered-page review.
+- Configure Matt Pocock engineering skills with local Markdown tracking,
+  canonical triage roles, and lazy single-context domain documentation.

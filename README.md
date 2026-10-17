@@ -111,6 +111,26 @@ bash tests/test_create_document.sh
 These exercise existing-file and dangling-symlink protection. They do not replace
 an actual LaTeX build and PDF inspection.
 
+## Matt Pocock skills
+
+Repository development is configured through [`AGENTS.md`](AGENTS.md) and
+`docs/agents/`:
+
+- [Issue tracker](docs/agents/issue-tracker.md): local Markdown under `.scratch/`,
+  including specs, implementation tickets, and wayfinding maps.
+- [Triage labels](docs/agents/triage-labels.md): the five canonical roles,
+  recorded as local `Status:` values.
+- [Domain docs](docs/agents/domain.md): a root glossary and `docs/adr/`, created
+  lazily when terminology or decisions are resolved.
+
+`to-spec`, `to-tickets`, `triage`, `wayfinder`, and `domain-modeling` use these
+conventions. Edit `docs/agents/*.md` to change them; no remote repository,
+issues, or labels are required for the current setup.
+
+Matt's engineering skills are already installed in the local agent environment.
+They are not vendored into this repository or included in the installable
+`academic-document/` package; another machine needs its own skill installation.
+
 ## License
 
 Skill instructions, scripts, tests, and documentation use the MIT license in
