@@ -1,0 +1,301 @@
+\providecommand{\documentfontsize}{12pt}
+\providecommand{\documentpaper}{letterpaper}
+\edef\documentclassoptions{\documentfontsize,\documentpaper}
+\expandafter\documentclass\expandafter[\documentclassoptions]{article}
+\usepackage{document}
+\addbibresource{references.bib}
+
+% Only the example uses PGFPlots; the style accepts ordinary image files too.
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\title{A Minimalist Research Document\thanks{%
+  Email: \href{mailto:author@example.org}{author@example.org}.
+  For helpful comments we thank xxx. All potential errors are our own.}}
+\author{Yuntian Zhao\\
+  {\small\color{GitHubMuted}Research document template}}
+\date{\today}
+\hypersetup{
+  pdftitle={A Minimalist Research Document},
+  pdfauthor={Yuntian Zhao},
+  pdfsubject={Research article template with Libertinus Serif}
+}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This template adapts the typography and restrained visual language of the
+companion Beamer template to a research article. Libertinus Serif provides
+body text and headings, with matching mathematical typography and a separate
+monospaced code font. A quadratic optimization problem illustrates equations,
+assumptions, propositions, proofs, figures, tables, and algorithms. The examples
+are self-contained and serve only to demonstrate document structure.
+\keywords{research writing; mathematical typography; reproducible documents}
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+A research document should make its argument easy to follow without making
+its visual design the subject of attention. This template keeps the Beamer
+version's dark foreground, blue links, muted notes, and light code backgrounds.
+Plain bold titles and section headings accompany a single-column article,
+one-inch margins, page numbers, and one-and-a-half-spaced prose.
+
+Content belongs in the \texttt{.tex} file; reusable formatting belongs in
+\texttt{document.sty}. Start a new paper from \texttt{document-minimal.tex}.
+The full example shows common research-writing patterns without requiring
+external figures or code files. Standard \LaTeX{} commands remain available,
+including \verb|\section|, \verb|\label|, \verb|\ref|, and \verb|\appendix|.
+
+Author--date citations use the same Chicago style as the slide template.
+A textual citation looks like \textcite{melitz_impact_2003}; a parenthetical
+citation looks like \parencite{melitz_impact_2003}. The bibliography database
+is declared in the document rather than in the style, so each paper can use
+its own reference collection. The cited article is an example of the citation
+format, not a source for the optimization example below.
+
+\section{A running example}\label{sec:model}
+
+\subsection{Setup and notation}
+
+Let $\bm{\theta}\in\mathbb{R}^d$ denote the parameter vector and let
+$\bm{\theta}^{\star}$ denote its optimal value. Consider the quadratic objective
+\begin{equation}\label{eq:objective}
+  f(\bm{\theta})
+  = \frac{1}{2}(\bm{\theta}-\bm{\theta}^{\star})^{\mathsf{T}}
+    Q(\bm{\theta}-\bm{\theta}^{\star}).
+\end{equation}
+The expression separates parameters from curvature and gives a compact example
+of vectors, superscripts, and equation numbering. References such as
+Equation~\eqref{eq:objective} remain linked in the PDF.
+
+\begin{assumption}[Positive curvature]\label{ass:curvature}
+The matrix $Q\in\mathbb{R}^{d\times d}$ is symmetric and positive definite,
+with eigenvalues in $[\mu,L]$, where $0<\mu\leq L$.
+\end{assumption}
+
+\begin{definition}[Gradient update]
+For a fixed step size $\eta>0$, the sequence of iterates is defined by
+\begin{equation}\label{eq:update}
+  \bm{\theta}_{k+1}
+  = \bm{\theta}_k-\eta\nabla f(\bm{\theta}_k),
+  \qquad k=0,1,2,\ldots.
+\end{equation}
+\end{definition}
+
+\subsection{A convergence result}
+
+\begin{proposition}[Contraction]\label{prop:contraction}
+Under Assumption~\ref{ass:curvature}, if $0<\eta<2/L$, then
+\begin{equation}\label{eq:contraction}
+  \lVert\bm{\theta}_{k}-\bm{\theta}^{\star}\rVert_2
+  \leq q^k\lVert\bm{\theta}_{0}-\bm{\theta}^{\star}\rVert_2,
+  \qquad q=\max_{\lambda\in\{\mu,L\}}|1-\eta\lambda|<1.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The gradient is $Q(\bm{\theta}-\bm{\theta}^{\star})$. Subtracting
+$\bm{\theta}^{\star}$ from both sides of Equation~\eqref{eq:update} gives
+\[
+  \bm{\theta}_{k+1}-\bm{\theta}^{\star}
+  =(I-\eta Q)(\bm{\theta}_{k}-\bm{\theta}^{\star}).
+\]
+By symmetry of $Q$, the spectral norm of $I-\eta Q$ is bounded above by
+$q$. The step-size restriction makes both endpoint magnitudes strictly less
+than one. Iterating the norm inequality proves the claim.
+\end{proof}
+
+\begin{remark}
+Theorem-like environments share a counter within each section. Assumptions
+and definitions use upright text; propositions and theorems use italic text.
+Proofs use the standard end-of-proof square.
+\end{remark}
+
+\section{Illustrations and computation}\label{sec:illustrations}
+
+\subsection{Figures and tables}
+
+Figure~\ref{fig:objective} shows a scalar instance of
+Equation~\eqref{eq:objective}. Captions describe the object; notes supply
+assumptions, sources, and qualifications in muted text. For an external figure,
+replace the plot with:
+\begin{lstlisting}[language={[LaTeX]TeX},numbers=none]
+\includegraphics[width=\linewidth]{your-figure}
+\end{lstlisting}
+
+\begin{figure}[tbp]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[
+      width=0.78\linewidth,height=0.37\linewidth,
+      xmin=-2,xmax=2,ymin=0,ymax=2.2,
+      xlabel={$\theta$},ylabel={$f(\theta)$},
+      axis lines=left,
+      axis line style={GitHubMuted},
+      tick label style={font=\small},
+      label style={font=\small},
+      xtick={-2,-1,0,1,2},ytick={0,1,2},
+      samples=81,domain=-2:2]
+      \addplot[GitHubBlue,thick] {0.5*x^2};
+      \addplot[only marks,mark=*,GitHubRed] coordinates {(0,0)};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{A quadratic objective and its minimizer}\label{fig:objective}
+  \figurenote{\textit{Notes:} The scalar example sets $Q=1$ and
+    $\theta^{\star}=0$. The dot marks the unique minimizer.}
+\end{figure}
+
+Table~\ref{tab:convergence} illustrates the geometric bound in
+Proposition~\ref{prop:contraction} for two possible contraction factors.
+Horizontal rules separate the header and body; vertical rules are omitted.
+The numbers are analytical illustrations rather than empirical estimates.
+
+\begin{table}[tbp]
+  \centering
+  \caption{Illustrative normalized error bounds}\label{tab:convergence}
+  \begin{tabular}{@{}rrr@{}}
+    \toprule
+    Iteration $k$ & $q=0.5$ & $q=0.8$ \\
+    \midrule
+     0 & $1.0000$ & $1.0000$ \\
+     5 & $0.0313$ & $0.3277$ \\
+    10 & $0.0010$ & $0.1074$ \\
+    20 & $9.54\times10^{-7}$ & $0.0115$ \\
+    \bottomrule
+  \end{tabular}
+  \figurenote{\textit{Notes:} Each entry equals $q^k$, rounded for display.
+    The initial error is normalized to one.}
+\end{table}
+
+\subsection{Algorithms and code}
+
+Algorithm~\ref{alg:gradient} states the update independently of any programming
+language. A fixed iteration count keeps the example's stopping rule explicit.
+In an application, report the step size, initialization, and convergence
+criterion alongside the results.
+
+\begin{algorithm}[tbp]
+  \caption{Gradient descent with a fixed iteration count}\label{alg:gradient}
+  \begin{algorithmic}[1]
+    \Require Objective $f$, initial value $\bm{\theta}_0$, step size $\eta$,
+      iteration count $K$
+    \For{$k=0,\ldots,K-1$}
+      \State $\bm{\theta}_{k+1}\gets\bm{\theta}_k-\eta\nabla f(\bm{\theta}_k)$
+    \EndFor
+    \State \Return $\bm{\theta}_K$
+  \end{algorithmic}
+\end{algorithm}
+
+Listing~\ref{lst:gradient} implements the scalar case using only standard
+Python. Cascadia Code keeps operators and punctuation distinct, with code
+ligatures disabled. Source files can instead be included with:
+\begin{lstlisting}[language={[LaTeX]TeX},numbers=none]
+\lstinputlisting[language=Python]{your-code.py}
+\end{lstlisting}
+
+\begin{lstlisting}[language=Python,caption={Gradient descent for the scalar objective},label={lst:gradient}]
+def gradient_descent(theta: float, step: float,
+                     iterations: int) -> float:
+    """Minimize f(theta) = theta**2 / 2 for 0 < step < 2."""
+    for _ in range(iterations):
+        theta -= step * theta
+    return theta
+
+estimate = gradient_descent(1.0, 0.5, 20)
+assert abs(estimate) <= 1e-6
+\end{lstlisting}
+
+\subsection{Lists and emphasis}
+
+Use lists to isolate a small number of distinct conditions or conclusions:
+\begin{itemize}
+  \item Identify the estimand or theoretical object before presenting results.
+  \item State the assumptions needed for the argument.
+    \begin{itemize}
+      \item Distinguish maintained assumptions from testable implications.
+    \end{itemize}
+  \item Keep qualifications close to the claim they qualify.
+\end{itemize}
+For ordered steps, use an enumeration:
+\begin{enumerate}
+  \item Specify the model or empirical design.
+  \item Present the result and its uncertainty.
+  \item Discuss robustness and external validity.
+\end{enumerate}
+Use \emph{italics} for emphasis and \textbf{bold text} sparingly. Footnotes
+remain available for details that would interrupt the argument.\footnote{The
+body is one-and-a-half spaced; footnotes, captions, code, and bibliography
+entries use compact spacing.}
+
+\section{Conclusion}
+
+The template preserves the presentation's visual identity while using the
+conventions of a paper: serif body text, numbered sections, floating figures
+and tables, cross-references, an author--date bibliography, and lettered
+appendices. Keep the visual defaults in the style file and adapt the content
+to the research question.
+
+\printbibliography[heading=bibintoc,title={References}]
+
+\clearpage
+\appendix
+\section{Mathematical notation}\label{app:notation}
+
+The appendix uses letters for section numbers. Equation and theorem numbering
+follow the section automatically, so appendix material has distinct labels:
+\begin{equation}\label{eq:appendix}
+  \mathbb{E}[X]=\int_{\Omega}X(\omega)\,\mathrm{d}\mathbb{P}(\omega).
+\end{equation}
+The following alphabets retain the distinctions used by the Beamer template:
+\begin{align*}
+  \text{Calligraphic:}\quad & \mathcal{ABC} && \mathbcal{ABC} \\
+  \text{Script:}\quad       & \mathscr{ABC} && \mathbscr{ABC} \\
+  \text{Fraktur:}\quad      & \mathfrak{ABC} && \mathbfrak{ABC} \\
+  \text{Blackboard:}\quad   & \mathbb{R}\quad\mathbb{E}\quad\mathbb{P}.
+\end{align*}
+
+\begin{lemma}[Scalar iteration]
+If $d=1$, $Q=1$, and $\theta^{\star}=0$, then
+$\theta_k=(1-\eta)^k\theta_0$.
+\end{lemma}
+\begin{proof}
+Substitute the scalar gradient into Equation~\eqref{eq:update} and iterate.
+\end{proof}
+
+\section{Long-table pattern}
+
+Use \texttt{longtable} directly, rather than nesting it inside a floating table.
+Its header and footer definitions repeat automatically when rows cross a page
+boundary. The short glossary below supplies the pattern for longer data tables.
+
+\begin{longtable}{@{}p{0.18\linewidth}p{0.73\linewidth}@{}}
+  \caption{Notation for the running example}\label{tab:notation}\\
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endfirsthead
+  \multicolumn{2}{l}{\small\tablename~\thetable\ (continued)}\\
+  \toprule
+  Symbol & Meaning \\
+  \midrule
+  \endhead
+  \midrule
+  \multicolumn{2}{r}{\small Continued on the next page}\\
+  \endfoot
+  \bottomrule
+  \endlastfoot
+  $d$ & Dimension of the parameter vector. \\
+  $\bm{\theta}$ & Parameter vector. \\
+  $\bm{\theta}^{\star}$ & Unique minimizer of the objective. \\
+  $Q$ & Symmetric positive-definite curvature matrix. \\
+  $\mu$ & Positive lower bound on the eigenvalues of $Q$. \\
+  $L$ & Upper bound on the eigenvalues of $Q$. \\
+  $\eta$ & Step size in the gradient update. \\
+  $q$ & Upper bound on the per-iteration contraction factor. \\
+  $k$ & Iteration index, starting at zero. \\
+  $K$ & Number of gradient updates performed. \\
+\end{longtable}
+
+\end{document}

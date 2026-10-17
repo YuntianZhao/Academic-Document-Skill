@@ -1,0 +1,15 @@
+{
+  "source": "Document-Template",
+  "source_kind": "local-snapshot",
+  "source_directory": "../Document-Template",
+  "captured_on": "2026-10-17",
+  "bundled_directory": "academic-document/assets/template",
+  "files_sha256": {
+    "document.sty": "2ff63a0d1d3f6b97bb6c77615599137fc452d99a635179033c3c57f9e829eccc",
+    "document-minimal.tex": "d080ea27b5187a2fe773c7a06a86c4bb334fb433d7e4dc03be19cd4263b055a0",
+    "document.tex": "e546f8090ab3da0d8935a430c8a3d51f1f69c42d8be5ebd7f74a4cee1408850f",
+    "references.bib": "0b575292756a106ab5132f5a246c706b9429b24d10a093d82b401e397b520b06",
+    ".latexmkrc": "6223c7cf2c8ca40267bb0ef546f4f26285718b8b43585dc4f98fdd8184d47563",
+    "LICENSE.txt": "5f05fcf6ef25a6c31bccd2df7c0c46b23107bbeb2ce5cdba74efb5cc357f4dbb"
+  }
+}

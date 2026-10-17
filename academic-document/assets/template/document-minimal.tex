@@ -1,0 +1,47 @@
+%% Copyright 2026 Yuntian Zhao
+%
+% Distributed under the LaTeX Project Public License, version 1.3c or later:
+% https://www.latex-project.org/lppl.txt
+% Maintenance status: author-maintained. Current Maintainer: Yuntian Zhao.
+% This work consists of document.sty and document-minimal.tex.
+
+\providecommand{\documentfontsize}{12pt}
+\providecommand{\documentpaper}{letterpaper}
+\edef\documentclassoptions{\documentfontsize,\documentpaper}
+\expandafter\documentclass\expandafter[\documentclassoptions]{article}
+\usepackage{document}
+\addbibresource{references.bib}
+
+\title{Research Paper Title\thanks{%
+  Email: \href{mailto:author@example.org}{author@example.org}.
+  For helpful comments we thank xxx. All potential errors are our own.}}
+\author{Author Name\\
+  {\small\color{GitHubMuted}Institution}}
+\date{\today}
+\hypersetup{pdftitle={Research Paper Title},pdfauthor={Author Name}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+State the research question, the method, and the main finding in one paragraph.
+\keywords{keyword one; keyword two; keyword three}
+\end{abstract}
+
+\section{Introduction}
+Introduce the question and explain the contribution relative to the literature.
+For example, \textcite{melitz_impact_2003} studies firm heterogeneity and trade.
+
+\section{Analysis}
+Present the model, identification strategy, or empirical design and results.
+
+\section{Conclusion}
+Summarize the finding and its implications.
+
+\printbibliography[heading=bibintoc,title={References}]
+
+\appendix
+\section{Additional results}
+Place supporting derivations and robustness checks here.
+
+\end{document}
